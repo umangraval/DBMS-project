@@ -1,4 +1,4 @@
-FROM node:8.7.0-alpine
+FROM node:10.16.3-alpine
 
 # create app diectory and use it as the working directory
 
