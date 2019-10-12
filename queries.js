@@ -46,37 +46,36 @@ const getproperty = (request, response) => {
     //})
   }
 
-  const handleRegister = (request, response)=>{
-    const { email,username,password} =request.body;
-    pool.query('INSERT INTO users (email, username, password) VALUES ($1,$2,$3)', [email,username,password], (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(201).send(`user added`)
-    })
-  }
+//   const handleRegister = (request, response)=>{
+//     const { email,username,password} =request.body;
+//     pool.query('INSERT INTO users (email, username, password) VALUES ($1,$2,$3)', [email,username,password], (error, results) => {
+//       if (error) {
+//         throw error
+//       }
+//       response.status(201).send(`user added`)
+//     })
+//   }
 
-  const handleSignin = (request,response) => {
-    const { password, email}  = request.body;
-    pool.query('SELECT email,password FROM users WHERE password =$1 AND email=$2',[password,email],(error,results)=>{
-        console.log(results);
-        if(error){
-            throw error;
-        }
-        else{ 
-            if(results.rowCount === 0){
-                response.status(404).send('not found');
-            }
-            else if(results.rows[0].password === password && results.rows[0].email === email){
-            pool.query('INSERT INTO login (email,password) VALUES ($1,$2)',[email,password]);
-            response.status(404).json({
-                email: email,
-                username: results.rows[0].username
-            });
-            }
-        }
-    })
-}
+//   const handleSignin = (request,response) => {
+//     const { password, email}  = request.body;
+//     pool.query('SELECT email,password FROM users WHERE password =$1 AND email=$2',[password,email],(error,results)=>{
+//         if(error){
+//             throw error;
+//         }
+//         else{ 
+//             if(results.rowCount === 0){
+//                 response.status(404).send('not found');
+//             }
+//             else if(results.rows[0].password === password && results.rows[0].email === email){
+//             pool.query('INSERT INTO login (email,password) VALUES ($1,$2)',[email,password]);
+//             response.status(404).json({
+//                 email: email,
+//                 username: results.rows[0].username
+//             });
+//             }
+//         }
+//     })
+// }
 const update=(req,res)=>{
      const place = req.body.place;
      const name = req.body.name;
@@ -91,13 +90,57 @@ const update=(req,res)=>{
     }) 
 }
 
+const signin = (req,res) => {
+    res.render("signin");
+}
 
-  module.exports = {
+const handlesignin = (req,res) => {
+     const email = req.body.email;
+     const password = req.body.password;
+     pool.query('SELECT email,password FROM users WHERE email=$1 AND password=$2',[email,password],(err,result)=>{
+     if(result.rowCount>0){
+        if(result.rows[0].email===email && result.rows[0].password===password){
+            pool.query('INSERT INTO login (email,password) VALUES ($1,$2)', [email,password], (error, login) => {
+                if (error){
+                  res.render("/siginin");
+                }else{
+                    res.redirect("/property");
+                }
+            })
+        }
+        else{
+            res.redirect("/siginin");
+        }
+    }
+});
+}
+
+
+const register = (req,res) => {
+    res.render("register");
+}
+
+const handleregister = (req,res) => {
+     const username = req.body.username;
+     const email = req.body.email;
+     const password = req.body.password;
+     pool.query('INSERT INTO users (username,email,password) VALUES ($1,$2,$3)',[username,email,password],(err,result)=>{
+        if (error){
+            res.redirect("/register");
+        }else{
+            res.redirect("/property");
+        }
+        })
+    }
+  
+    module.exports = {
     getproperty,
     getpropertyById,
     sell,
     getreviews,
-    handleRegister,
-    handleSignin, 
-    update
+    handleregister,
+    register,
+    update,
+    handlesignin,
+    signin
   }
