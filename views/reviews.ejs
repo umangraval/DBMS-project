@@ -1,0 +1,14 @@
+<div>
+        <h2>REVIEWS</h2>
+        <% reviews["rows"].forEach(function(review){ %>
+            <li><%=review.comment%></li>
+            <% }) %>
+    </div>
+    <div>
+        <h2>write a review</h2>
+        <form method="post" action="/review">
+        <input type="text" name="review" placeholder="Review">
+        <input type="submit" value="submit">
+        </form>
+    </div>
+    <button type="button"><a href="/property">back</a></button>
