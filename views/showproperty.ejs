@@ -1,0 +1,9 @@
+<div> <h1>showing details</h1></div>
+<div>
+    <% foundinfo["rows"].forEach(function(property){ %>
+        <li><%=property.name%></li>
+        <li><%=property.place %></li>
+        <li><%=property.cost %></li>
+
+    <% }) %>
+</div>

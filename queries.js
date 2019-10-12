@@ -12,16 +12,17 @@ const getproperty = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(200).json(results.rows)
+      response.status(200).render("properties",{results: results});
     })
   }
-  const getpropertyByplace = (request, response) => {
-    const place = request.params.place
-    pool.query('SELECT * FROM property WHERE place = $1', [place], (error, results) => {
+  const getpropertyById = (request, response) => {
+    const id = request.params.id
+    pool.query('SELECT * FROM property WHERE id = $1', [id], (error, foundinfo) => {
       if (error) {
         response.status(400).json('wrong credentials')
+        response.redirect("/property");
       }
-      response.status(200).json(results.rows)
+      response.status(200).render("showproperty",{foundinfo:foundinfo});
     })
   }
   const getreviews = (request, response) => {
@@ -35,14 +36,14 @@ const getproperty = (request, response) => {
   }
   
   const sell = (request, response) => {
-    const { place } = request.body;
-    console.log(place);
-    pool.query('INSERT INTO property (place) VALUES ($1)', [place], (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(201).send(`place added`)
-    })
+    // const { place } = request.body;
+    // //console.log(place);
+    // pool.query('INSERT INTO property (place) VALUES ($1)', [place], (error, results) => {
+    //   if (error) {
+    //     throw error
+    //   }
+      response.status(201).render("newproperty");
+    //})
   }
 
   const handleRegister = (request, response)=>{
@@ -68,20 +69,35 @@ const getproperty = (request, response) => {
             }
             else if(results.rows[0].password === password && results.rows[0].email === email){
             pool.query('INSERT INTO login (email,password) VALUES ($1,$2)',[email,password]);
-            response.status(404).send('logged in');
+            response.status(404).json({
+                email: email,
+                username: results.rows[0].username
+            });
             }
         }
     })
 }
-
-const getrented = (request, response) =>{
-    const 
+const update=(req,res)=>{
+     const place = req.body.place;
+     const name = req.body.name;
+     const cost = parseInt(req.body.cost);
+     
+     pool.query('INSERT INTO property (place,cost,name) VALUES ($1,$2,$3)', [place,cost,name], (error, results) => {
+      if (error) {
+        res.render("newproperty");
+      }else{
+          res.redirect("/property");
+      }
+    }) 
 }
+
+
   module.exports = {
     getproperty,
-    getpropertyByplace,
+    getpropertyById,
     sell,
     getreviews,
     handleRegister,
-    handleSignin
+    handleSignin, 
+    update
   }
