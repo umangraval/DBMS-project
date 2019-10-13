@@ -1,5 +1,22 @@
+<html>
+    <head>
+        <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            </head>
+            <body>
+                    <nav>
+                            <div class="nav-wrapper">
+                              <a href="#" class="brand-logo">Estatics</a>
+                              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                                <li><a href="/signin">SignIn</a></li>
+                              </ul>
+                            </div>
+                        </nav>
 <div> <h1>Transaction</h1></div>
-<div>
+<!-- <div>
     <% data["rows"].forEach(function(trx){ %>
         <li><%=trx.token%></li>
         <li><%=trx.price%></li>
@@ -7,6 +24,31 @@
         <li><%=trx.date %></li>
         <br>
     <% }) %>
-</div>
+</div> -->
 
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Serial No</th>
+        <th scope="col">Token</th>
+        <th scope="col">Price</th>
+        <th scope="col">Property Id</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+            <% data["rows"].forEach(function(trx){ %>
+        <tr>
+        <th scope="row">1</th>
+        <td><%=trx.token%></td>
+        <td><%=trx.price%></td>
+        <td><%=trx.propertyid%></td>
+        <td><%=trx.date%></td>
+      </tr>
+      <% }) %>
+    </tbody>
+</table>
 <button><a href="/property">back</a></button>
+</body>
+</html>

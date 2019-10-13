@@ -1,9 +1,28 @@
+<html>
+    <head>
+        <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            </head>
+            <body>
+                    <nav>
+                            <div class="nav-wrapper">
+                              <a href="#" class="brand-logo">Estatics</a>
+                              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                                <li><a href="/signin">SignIn</a></li>
+                              </ul>
+                            </div>
+                        </nav>
+
 <div> <h1>showing details</h1></div>
 <div>
     <% foundinfo["rows"].forEach(function(property){ %>
         <li><%=property.name%></li>
         <li><%=property.place %></li>
         <li><%=property.cost %></li>
+        <li><img src="/images/<%=property.imageurl%>"/></li>
     <% }) %>
 </div>
 <form method="post" action="/buy">
@@ -25,3 +44,6 @@
 
     <button type="button"><a href="/rent">rent</a></button>
     <button type="button"><a href="/property">back</a></button>
+    </body>
+    </html>
+    

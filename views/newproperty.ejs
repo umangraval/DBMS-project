@@ -1,8 +1,28 @@
+<html>
+    <head>
+        <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            </head>
+            <body>
+                    <nav>
+                            <div class="nav-wrapper">
+                              <a href="#" class="brand-logo">Estatics</a>
+                              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                                <li><a href="/signin">SignIn</a></li>
+                              </ul>
+                            </div>
+                        </nav>
 <div> create new property</div>
 <form action="/property" method="post">
 <input type="text" name="name" placeholder="name">
 <input type="text" name="cost" placeholder="cost">
 <input type="text" name="place" placeholder="place">
+<input type="file" name="pic" accept="image/*">
 <input type="submit">
 </form>
 <button><a href="/property">back</a></button>
+</body>
+</html>

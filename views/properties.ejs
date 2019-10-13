@@ -1,8 +1,78 @@
-<h1>properties</h1>
+<html>
+    <head>
+        <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-<% results["rows"].forEach(function(property){ %>
-    <li><%=property.name %> <a href="/property/<%= property.id %>">read more</a></li>
-<% }) %>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+            <style>
+        .grid { 
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          grid-gap: 20px;
+          align-items: stretch;
+          }
+        .grid > article {
+          border: 1px solid #ccc;
+          box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+        }
+        .grid > article img {
+          max-width: 100%;
+        }
+        .text {
+          padding: 0 20px 20px;
+        }
+        .text > button {
+          background: gray;
+          border: 0;
+          color: white;
+          padding: 10px;
+          width: 100%;
+          }
+        </style>    
+</head>
+<body>
+        <nav>
+                <div class="nav-wrapper">
+                  <a href="#" class="brand-logo">Estatics</a>
+                  <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/sell">Sell</a></li>
+                    <li><a href="/myproperties">My Properties</a></li>
+                    <li><a href="/transaction">Transaction</a></li>
+                    <li><a href="/signin">SignOut</a></li>
+                  </ul>
+                </div>
+              </nav>
 
-<h1>Create a new property</h1>
-<button><a href="/sell">create new</a></button>
+    <h1>properties</h1>
+    <!-- <tr>
+    <% results["rows"].forEach(function(property){ %>
+    <td>
+    <div class="card" style="width: 18rem;">
+        <img src="/images/<%=property.imageurl%>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%=property.name %></h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="/property/<%= property.id %>" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </td>
+      <% }) %>
+    </tr> -->
+    <div style="margin:100px">
+    <main class="grid">
+            <% results["rows"].forEach(function(property){ %>
+            <article>
+                    <img src="/images/<%=property.imageurl%>" alt="Sample" height="150" width="640">
+                    <div class="text">
+                      <h3><%=property.name %></h3>
+                      <p>Collaboratively administrate empowered markets via plug-and-play networks.</p>
+                      <button><a href="/property/<%= property.id %>">more info</a></button>
+                    </div>
+                  </article>
+                  
+                  <% }) %>
+    </main>
+</body>
+</html>

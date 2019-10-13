@@ -29,6 +29,7 @@ const getproperty = (request, response) => {
     propertyid=id;
     pool.query('SELECT * FROM property WHERE id = $1', [id], (error, foundinfo) => {
         propertycost=foundinfo.rows[0].cost;
+        //console.log(foundinfo);
         pool.query('SELECT comment FROM reviews WHERE proid=$1',[id],(err,reviews)=>{
         if (error) {
         response.redirect("/property");
@@ -61,7 +62,9 @@ const getproperty = (request, response) => {
     const place = req.body.place;
      const name = req.body.name;
      const cost = parseInt(req.body.cost);
-     pool.query('INSERT INTO property (place,cost,name) VALUES ($1,$2,$3)', [place,cost,name], (error, results) => {
+     const image = req.body.pic;
+     //console.log(image);
+     pool.query('INSERT INTO property (place,cost,name,imageurl,ownerid) VALUES ($1,$2,$3,$4,$5)', [place,cost,name,image,customerid], (error, results) => {
       if (error) {
         res.render("newproperty");
       }else{
@@ -124,17 +127,22 @@ const handleregister = (req,res) => {
     const rentdetails = (req,res)=>{
         const person=req.body.person;
         const duration=req.body.duration;
+        var total;
         proid = propertyid;
         id=customerid;
-        pool.query('INSERT INTO renter (cusid,person,duration,propertyid) VALUES ($1,$2,$3,$4)',[id,person,duration,proid],(err,data)=>{
-                res.redirect('/property');
+        pool.query('SELECT cost FROM property WHERE id=$1',[proid],(err,costs)=>{
+        const total =Number((costs.rows[0].cost) * duration);
+        console.log(total);            
+        pool.query('INSERT INTO renter (cusid,person,duration,propertyid,total_rent) VALUES ($1,$2,$3,$4,$5)',[id,person,duration,proid,total],(err,data)=>{
+            console.log(err);    
+            res.redirect('/property');
         })    
-    }
-  
+    });
+}
 
     const showtrasaction = (req,res)=> {
         pool.query('SELECT * FROM transaction WHERE userid=$1',[customerid],(err,data)=>{
-            console.log(data);
+            //console.log(data);
             res.render("showtransactions",{id:propertyid,uid:customerid,data:data});
             
         })
@@ -152,6 +160,12 @@ const handleregister = (req,res) => {
         })
     }
 
+    const myproperties = (req,res)=>{
+        pool.query('SELECT * FROM property WHERE ownerid=$1',[customerid],(err,result)=>{
+            res.render("myproperties",{result:result});
+        })
+    }
+
     module.exports = {
     getproperty,
     getpropertyById,
@@ -165,5 +179,6 @@ const handleregister = (req,res) => {
     rentdetails,
     rent,
     showtrasaction,
-    buy
+    buy,
+    myproperties
   }

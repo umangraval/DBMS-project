@@ -3,8 +3,8 @@ const app =express()
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt-nodejs');
 const db = require('./queries')
-
-
+var publicDir = require('path').join(__dirname,'/public');
+app.use(express.static(publicDir));
 
 app.set("view engine","ejs");
 app.use(bodyParser.json())
@@ -30,6 +30,7 @@ app.post("/rentdetails",db.rentdetails);
 app.get("/rent",db.rent)
 app.get("/transaction",db.showtrasaction);
 app.post("/buy",db.buy);
+app.get("/myproperties",db.myproperties);
 
 app.listen(3000,function(){
     console.log("server on port 3000");
