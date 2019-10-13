@@ -7,7 +7,9 @@
 
     <% }) %>
 </div>
-<button type="button"><a href="/transaction">buy</a></button>
+<form method="post" action="/buy">
+    <input type="submit" value="buy">
+</form>
 <div>
         <h2>REVIEWS</h2>
         <% reviews["rows"].forEach(function(review){ %>

@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt-nodejs');
+var crypto = require('crypto');
+var hash = require('object-hash');
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'umang13',
@@ -7,9 +9,12 @@ const pool = new Pool({
   password: '',
   port: 5432,
 })
+
 var customerid;
 var propertyid;
-
+var propertycost;
+var c=0;
+var token;
 const getproperty = (request, response) => {
     pool.query('SELECT * FROM property ORDER BY id ASC', (error, results) => {
       if (error) {
@@ -23,6 +28,7 @@ const getproperty = (request, response) => {
     const id = request.params.id;
     propertyid=id;
     pool.query('SELECT * FROM property WHERE id = $1', [id], (error, foundinfo) => {
+        propertycost=foundinfo.rows[0].cost;
         pool.query('SELECT comment FROM reviews WHERE proid=$1',[id],(err,reviews)=>{
         if (error) {
         response.redirect("/property");
@@ -128,7 +134,21 @@ const handleregister = (req,res) => {
 
     const showtrasaction = (req,res)=> {
         pool.query('SELECT * FROM transaction WHERE userid=$1',[customerid],(err,data)=>{
+            console.log(data);
             res.render("showtransactions",{id:propertyid,uid:customerid,data:data});
+            
+        })
+    }
+
+
+    const buy = (req, res) => {
+        var date = new Date();
+        var key = {pid:propertyid, cid:customerid} ;
+        //token = crypto.createHmac('sha1', toString(key)).update(toString(text)).digest('hex');        
+        token = hash(key);
+        console.log(token);
+        pool.query('INSERT INTO transaction (token,propertyid,price,date,userid) VALUES ($1,$2,$3,$4,$5)',[token,propertyid,propertycost,date,customerid],(err,info)=>{
+            res.redirect("/transaction");
         })
     }
 
@@ -144,5 +164,6 @@ const handleregister = (req,res) => {
     signin,
     rentdetails,
     rent,
-    showtrasaction
+    showtrasaction,
+    buy
   }

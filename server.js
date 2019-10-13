@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt-nodejs');
 const db = require('./queries')
 
+
+
 app.set("view engine","ejs");
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended:true})); 
@@ -27,6 +29,7 @@ app.post("/register",db.handleregister);
 app.post("/rentdetails",db.rentdetails);
 app.get("/rent",db.rent)
 app.get("/transaction",db.showtrasaction);
+app.post("/buy",db.buy);
 
 app.listen(3000,function(){
     console.log("server on port 3000");
