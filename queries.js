@@ -18,7 +18,7 @@ var token;
 
 const getproperty = (request, response) => {
     pool.query('SELECT * FROM property ORDER BY id ASC', (error, results) => {
-      console.log(name);
+      //console.log(name);
         if (error) {
         throw error
       }
@@ -65,8 +65,9 @@ const getproperty = (request, response) => {
      const name = req.body.name;
      const cost = parseInt(req.body.cost);
      const image = req.body.pic;
+     const description=req.body.description;
      //console.log(image);
-     pool.query('INSERT INTO property (place,cost,name,imageurl,ownerid) VALUES ($1,$2,$3,$4,$5)', [place,cost,name,image,customerid], (error, results) => {
+     pool.query('INSERT INTO property (place,cost,name,imageurl,ownerid,description) VALUES ($1,$2,$3,$4,$5,$6)', [place,cost,name,image,customerid,description], (error, results) => {
       if (error) {
         res.render("newproperty");
       }else{
@@ -137,7 +138,7 @@ const handleregister = (req,res) => {
         id=customerid;
         pool.query('SELECT cost FROM property WHERE id=$1',[proid],(err,costs)=>{
         const total =Number((costs.rows[0].cost) * duration);
-        console.log(total);            
+        //console.log(total);            
         pool.query('INSERT INTO renter (cusid,person,duration,propertyid,total_rent) VALUES ($1,$2,$3,$4,$5)',[id,person,duration,proid,total],(err,data)=>{
             console.log(err);    
             res.redirect('/showrent');
@@ -146,7 +147,7 @@ const handleregister = (req,res) => {
 }
     const showrent = (req,res) => {
         pool.query('SELECT * FROM renter WHERE cusid = $1',[customerid],(err,data)=>{
-            res.render("rentpay",{data:data});
+        res.render("rentpay",{data:data});
         })
     }
 

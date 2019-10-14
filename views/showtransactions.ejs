@@ -20,7 +20,7 @@
                               </ul>
                             </div>
                         </nav>
-<div> <h1>Transaction</h1></div>
+<div class="center-align" style="margin-left: 250px; margin-right: 250px"> <h1>Transaction</h1>
 <!-- <div>
     <% data["rows"].forEach(function(trx){ %>
         <li><%=trx.token%></li>
@@ -43,7 +43,7 @@
       </tr>
     </thead>
     <tbody>
-      <% var c=1 %>
+      <% var c=1,total=0 %>
             <% data["rows"].forEach(function(trx){ %>
         <tr>
         <th scope="row"><%=c%></th>
@@ -52,9 +52,52 @@
         <td><%=trx.propertyid%></td>
         <td><%=trx.date%></td>
       </tr>
+      <% total=total + trx.price%>
       <% c++ %>
       <% }) %>
     </tbody>
 </table>
+<br>
+<div class="center-align">
+  TOTAL PAY = <%=total%> <div id="paypal-button"></div>
+  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+  <script>
+  paypal.Button.render({
+  // Configure environment
+  env: 'sandbox',
+  client: {
+  sandbox: 'demo_sandbox_client_id',
+  production: 'demo_production_client_id'
+  },
+  // Customize button (optional)
+  locale: 'en_US',
+  style: {
+  size: 'small',
+  color: 'gold',
+  shape: 'pill',
+  },
+  // Set up a payment
+  payment: function (data, actions) {
+  return actions.payment.create({
+  transactions: [{
+  amount: {
+  total: '0.01',
+  currency: 'USD'
+  }
+  }]
+  });
+  },
+  // Execute the payment
+  onAuthorize: function (data, actions) {
+  return actions.payment.execute()
+  .then(function () {
+  // Show a confirmation message to the buyer
+  window.alert('Thank you for your purchase!');
+  });
+  }
+  }, '#paypal-button');
+  </script>  
+</div>
+</div>
 </body>
 </html>

@@ -20,18 +20,35 @@
                             </div>
                         </nav>
     
- <div class="center-align">                  
+ <div class="center-align" style="margin-left: 250px;margin-right:250px">                  
 <div> <h2>rent details</h2></div>
-<% var total =0%>
-<% data["rows"].forEach(function(rentdetails){ %>
-    <h6>PROPERTYID = <%=rentdetails.propertyid%></h6>
-    <h6>DURATION = <%=rentdetails.duration %></h6>
-    <h6>PERSON = <%=rentdetails.person %></h6>
-    <h6>TOTAL = <%=rentdetails.total_rent %></h6>
+<table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Serial No</th>
+            <th scope="col">Property Id</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Person</th>
+            <th scope="col">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var c=1,total=0 %>
+          <% data["rows"].forEach(function(rentdetails){ %>
+            <tr>
+            <th scope="row"><%=c%></th>
+            <td><%=rentdetails.propertyid%></td>
+            <td><%=rentdetails.duration %></td>
+            <td><%=rentdetails.person %></td>
+            <td><%=rentdetails.total_rent %></td>
+          </tr>
+          <% total=total + rentdetails.total_rent %>
+          <% c++ %>
+          <% }) %>
+        </tbody>
+    </table>
     <br>
-    <%total=rentdetails.total_rent + total%>
-<% }) %>
-TOTAL Amount: <%=total%>
+<h2>TOTAL Amount: <%=total%>
 <div id="paypal-button"></div>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
@@ -70,6 +87,7 @@ window.alert('Thank you for your purchase!');
 }
 }, '#paypal-button');
 </script>
+</h2>
 </div>
 </body>
 </html>
