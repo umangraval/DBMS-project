@@ -11,11 +11,15 @@
                             <div class="nav-wrapper">
                               <a href="#" class="brand-logo">Estatics</a>
                               <ul id="nav-mobile" class="right hide-on-med-and-down">
-                                <li><a href="/signin">SignIn</a></li>
+                                  <li><a href="/property">Properties</a></li>
+                                  <li><a href="/sell">Sell</a></li>
+                                  <li><a href="/myproperties">My Properties</a></li>
+                                  <li><a href="/transaction">Transaction</a></li>
+                              <li><a href="/signin">SignOut</a></li>
                               </ul>
                             </div>
                         </nav>
-<div> rent details</div>
+<div class="center-align"><h2>rent details</h2> 
 <form action="/rentdetails" method="post">
 <input type="text" name="person" placeholder="person">
 <input type="text" name="duration" placeholder="duration">
@@ -23,5 +27,6 @@
 </form>
 
 <button><a href="/property/<%=id%>">back</a></button>
+</div>
 </body>
 </html>

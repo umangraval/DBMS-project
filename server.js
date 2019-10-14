@@ -28,6 +28,7 @@ app.get("/register", db.register);
 app.post("/register",db.handleregister);
 app.post("/rentdetails",db.rentdetails);
 app.get("/rent",db.rent)
+app.get("/showrent",db.showrent);
 app.get("/transaction",db.showtrasaction);
 app.post("/buy",db.buy);
 app.get("/myproperties",db.myproperties);

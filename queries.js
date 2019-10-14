@@ -9,18 +9,20 @@ const pool = new Pool({
   password: '',
   port: 5432,
 })
-
+var name;
 var customerid;
 var propertyid;
 var propertycost;
 var c=0;
 var token;
+
 const getproperty = (request, response) => {
     pool.query('SELECT * FROM property ORDER BY id ASC', (error, results) => {
-      if (error) {
+      console.log(name);
+        if (error) {
         throw error
       }
-      response.status(200).render("properties",{results: results});
+      response.status(200).render("properties",{results: results,name:name});
     })
   }
   
@@ -80,10 +82,11 @@ const signin = (req,res) => {
 const handlesignin = (req,res) => {
      const email = req.body.email;
      const password = req.body.password;
-     pool.query('SELECT userid,email,password FROM users WHERE email=$1 AND password=$2',[email,password],(err,result)=>{
-     if(result.rowCount>0){
+     pool.query('SELECT username,userid,email,password FROM users WHERE email=$1 AND password=$2',[email,password],(err,result)=>{
+        if(result.rowCount>0){
         if(result.rows[0].email===email && result.rows[0].password===password){
             customerid=result.rows[0].userid;
+            name = result.rows[0].username;
             pool.query('INSERT INTO login (email,password) VALUES ($1,$2)', [email,password], (error, login) => {
                 if (error){
                   res.render("siginin");
@@ -93,11 +96,12 @@ const handlesignin = (req,res) => {
             })
         }
         else{
-            res.redirect("/siginin");
+            res.redirect("/signin");
         }
     }
 });
 }
+
 
 
 const register = (req,res) => {
@@ -112,8 +116,9 @@ const handleregister = (req,res) => {
         if (err){
             res.render("register");
         }else{
-            pool.query('SELECT userid FROM users',(err,uid)=>{
+            pool.query('SELECT userid,username FROM users WHERE email=$1',[email],(err,uid)=>{
                 customerid=uid.rows[0].userid;
+                name=uid.rows[0].username;
             })
             res.redirect("/property");
         }
@@ -135,14 +140,21 @@ const handleregister = (req,res) => {
         console.log(total);            
         pool.query('INSERT INTO renter (cusid,person,duration,propertyid,total_rent) VALUES ($1,$2,$3,$4,$5)',[id,person,duration,proid,total],(err,data)=>{
             console.log(err);    
-            res.redirect('/property');
+            res.redirect('/showrent');
         })    
     });
 }
+    const showrent = (req,res) => {
+        pool.query('SELECT * FROM renter WHERE cusid = $1',[customerid],(err,data)=>{
+            res.render("rentpay",{data:data});
+        })
+    }
 
     const showtrasaction = (req,res)=> {
         pool.query('SELECT * FROM transaction WHERE userid=$1',[customerid],(err,data)=>{
             //console.log(data);
+            const pId=data.rows
+            pool.query('SELECT name FROM property WHERE id IN $1',[])
             res.render("showtransactions",{id:propertyid,uid:customerid,data:data});
             
         })
@@ -180,5 +192,6 @@ const handleregister = (req,res) => {
     rent,
     showtrasaction,
     buy,
-    myproperties
+    myproperties,
+    showrent
   }

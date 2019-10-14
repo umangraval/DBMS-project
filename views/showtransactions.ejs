@@ -11,7 +11,12 @@
                             <div class="nav-wrapper">
                               <a href="#" class="brand-logo">Estatics</a>
                               <ul id="nav-mobile" class="right hide-on-med-and-down">
+                                <li><a href="/property">Properties</a></li>
+                                <li><a href="/sell">Sell</a></li>
+                                <li><a href="/myproperties">My Properties</a></li>
+                                <li><a href="/transaction">Transaction</a></li>
                                 <li><a href="/signin">SignIn</a></li>
+
                               </ul>
                             </div>
                         </nav>
@@ -38,17 +43,18 @@
       </tr>
     </thead>
     <tbody>
+      <% var c=1 %>
             <% data["rows"].forEach(function(trx){ %>
         <tr>
-        <th scope="row">1</th>
+        <th scope="row"><%=c%></th>
         <td><%=trx.token%></td>
         <td><%=trx.price%></td>
         <td><%=trx.propertyid%></td>
         <td><%=trx.date%></td>
       </tr>
+      <% c++ %>
       <% }) %>
     </tbody>
 </table>
-<button><a href="/property">back</a></button>
 </body>
 </html>
