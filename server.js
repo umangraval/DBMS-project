@@ -1,4 +1,5 @@
 const express = require('express')
+const PORT = process.env.PORT || 3000;
 const app =express()
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt-nodejs');
@@ -10,9 +11,9 @@ app.set("view engine","ejs");
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended:true})); 
 
-app.get('/', (request, response) => {
-    response.json({ info: 'welcome' })
-  })
+// app.get('/', (request, response) => {
+//     response.json({ info: 'welcome' })
+//   })
 app.get('/property',db.getproperty);
 app.get('/property/:id', db.getpropertyById)
 app.get('/sell', db.sell)
@@ -32,7 +33,10 @@ app.get("/showrent",db.showrent);
 app.get("/transaction",db.showtrasaction);
 app.post("/buy",db.buy);
 app.get("/myproperties",db.myproperties);
+app.get('*',function (req, res) {
+  res.redirect('/property');
+});
 
-app.listen(3000,function(){
-    console.log("server on port 3000");
+app.listen(PORT,function(){
+    console.log("server on port "+ PORT);
 });
