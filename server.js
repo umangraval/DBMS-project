@@ -1,5 +1,5 @@
 const express = require('express')
-const PORT = server.listen(process.env.PORT || 3000);
+const PORT = 3000;
 const app =express()
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt-nodejs');
@@ -18,6 +18,7 @@ app.get('/property',db.getproperty);
 app.get('/property/:id', db.getpropertyById)
 app.get('/sell', db.sell)
 app.post('/review', db.addreviews);
+
 //app.get('/review',db.showreviews);
 // app.post('/signin', db.handleSignin);
 // app.post('/register',db.handleRegister);

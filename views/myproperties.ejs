@@ -19,23 +19,27 @@
                               </ul>
                             </div>
                         </nav>
-<div> <h1>showing my properties</h1></div>
+<div class="center-align" style="margin-left: 250px; margin-right: 250px"> <h1>showing my properties</h1>
 <div>
         <% result["rows"].forEach(function(property){ %>
         <div class="col s12 m7">
-                <h2 class="header"><%=property.name%></h2>
+                
                 <div class="card horizontal">
-                  <div class="card-image">
-                    <img src="/images/<%=property.imageurl%>" height="100px" width="150px">
+                  <div class="card-image" style="width:350px;height:250px">
+                    <img src="/images/<%=property.imageurl%>" height="250px" width="150px">
                   </div>
                   <div class="card-stacked">
                     <div class="card-content">
-                      <p>Place : <%=property.place %></p>
+                      <h4 class="left-align"><%=property.name%></h4></div>
+                      <div>
+                        <p>Place : <%=property.place %></p>
                       <p>Cost : <%=property.cost %></p>
+                      <p>Description : <%=property.description %></p>
                     </div>
                   </div>
                 </div>
             </div>
     <% }) %>
-</body>
+  </div>
+  </body>
 </html>
