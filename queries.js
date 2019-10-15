@@ -40,6 +40,7 @@ const getproperty = (request, response) => {
         })
     })
   }
+
   const addreviews = (request, response) => {
       const comment = request.body.comment;
      const proid= propertyid;
@@ -138,15 +139,18 @@ const handleregister = (req,res) => {
         id=customerid;
         pool.query('SELECT cost FROM property WHERE id=$1',[proid],(err,costs)=>{
         const total =Number((costs.rows[0].cost) * duration);
+        if(err) throw err;
         //console.log(total);            
         pool.query('INSERT INTO renter (cusid,person,duration,propertyid,total_rent) VALUES ($1,$2,$3,$4,$5)',[id,person,duration,proid,total],(err,data)=>{
-            console.log(err);    
+            if (err) throw err;
+            // console.log(err);    
             res.redirect('/showrent');
         })    
     });
 }
     const showrent = (req,res) => {
         pool.query('SELECT * FROM renter WHERE cusid = $1',[customerid],(err,data)=>{
+            if(err) throw err;
         res.render("rentpay",{data:data});
         })
     }
@@ -154,8 +158,9 @@ const handleregister = (req,res) => {
     const showtrasaction = (req,res)=> {
         pool.query('SELECT * FROM transaction WHERE userid=$1',[customerid],(err,data)=>{
             //console.log(data);
+            if (err) throw err;
             const pId=data.rows
-            pool.query('SELECT name FROM property WHERE id IN $1',[])
+            // pool.query('SELECT name FROM property WHERE id IN $1',[])
             res.render("showtransactions",{id:propertyid,uid:customerid,data:data});
             
         })
@@ -169,12 +174,16 @@ const handleregister = (req,res) => {
         token = hash(key);
         console.log(token);
         pool.query('INSERT INTO transaction (token,propertyid,price,date,userid) VALUES ($1,$2,$3,$4,$5)',[token,propertyid,propertycost,date,customerid],(err,info)=>{
-            res.redirect("/transaction");
+            if(err) throw err;
+           res.redirect("/transaction");
         })
     }
 
     const myproperties = (req,res)=>{
         pool.query('SELECT * FROM property WHERE ownerid=$1',[customerid],(err,result)=>{
+            if(err){
+                throw err;
+            }
             res.render("myproperties",{result:result});
         })
     }

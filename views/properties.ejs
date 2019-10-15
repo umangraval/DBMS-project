@@ -5,7 +5,22 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            
+            <script>
+            function search_properties() { 
+    let input = document.getElementById('searchbar').value 
+    input=input.toLowerCase(); 
+    let x = document.getElementsByClassName('animals'); 
+      ani= document.getElementsByClassName('ani')
+    for (i = 0; i < x.length; i++) {  
+        if (!x[i].innerHTML.toLowerCase().includes(input)) { 
+            ani[i].style.display="none"; 
+        } 
+        else { 
+            ani[i].style.display="";                  
+        } 
+    } 
+} 
+            </script>
             <style>
         .grid { 
           display: grid;
@@ -24,7 +39,7 @@
           padding: 0 20px 20px;
         }
         .text > button {
-          background: gray;
+          background: rgb(247, 91, 91);
           border: 0;
           color: white;
           padding: 10px;
@@ -46,7 +61,10 @@
                 </div>
               </nav>
 
-    <h1 class="center-align">Welcome <%=name%></h1>
+    <div class="center-align" style="margin-left: 250px; margin-right: 250px"><h1>Welcome <%=name%></h1>
+      <input id="searchbar" onkeyup="search_properties()" type="text"
+      name="search" placeholder="Search Property.."> 
+       </div>
     <!-- <tr>
     <% results["rows"].forEach(function(property){ %>
     <td>
@@ -64,12 +82,12 @@
     <div style="margin:100px">
     <main class="grid">
             <% results["rows"].forEach(function(property){ %>
-            <article>
+            <article class="ani">
                     <img src="/images/<%=property.imageurl%>" alt="Sample" height="150" width="640">
                     <div class="text">
-                      <h3><%=property.name %></h3>
+                      <h3 class="animals"><%=property.name %></h3>
                       <p><%=property.description %></p>
-                      <button><a href="/property/<%= property.id %>">more info</a></button>
+                      <button><a href="/property/<%= property.id %>" style="color:white">more info</a></button>
                     </div>
                   </article>
                   

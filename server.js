@@ -18,7 +18,6 @@ app.get('/property',db.getproperty);
 app.get('/property/:id', db.getpropertyById)
 app.get('/sell', db.sell)
 app.post('/review', db.addreviews);
-
 //app.get('/review',db.showreviews);
 // app.post('/signin', db.handleSignin);
 // app.post('/register',db.handleRegister);
@@ -37,7 +36,6 @@ app.get("/myproperties",db.myproperties);
 app.get('*',function (req, res) {
   res.redirect('/property');
 });
-
 app.listen(PORT,function(){
     console.log("server on port "+ PORT);
 });
