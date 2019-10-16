@@ -35,6 +35,9 @@
                         <p>Place : <%=property.place %></p>
                       <p>Cost : <%=property.cost %></p>
                       <p>Description : <%=property.description %></p>
+                      <form action="/delete/<%= property.propertyid %>" method="post">
+                      <input type="submit" name="delete" value="delete">
+                    </form>
                     </div>
                   </div>
                 </div>

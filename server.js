@@ -1,5 +1,5 @@
 const express = require('express')
-const PORT = 3000;
+// const PORT = 3001;
 const app =express()
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt-nodejs');
@@ -36,6 +36,8 @@ app.get("/myproperties",db.myproperties);
 app.get('*',function (req, res) {
   res.redirect('/property');
 });
-app.listen(PORT,function(){
-    console.log("server on port "+ PORT);
+
+app.post("/delete/:id",db.pdelete);
+app.listen(3005,function(){
+    console.log("server on port 3005");
 });
