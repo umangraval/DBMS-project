@@ -5,8 +5,37 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            </head>
-            <body>
+    <script>
+      var geocoder;
+var map;
+function initialize() {
+geocoder = new google.maps.Geocoder();
+var latlng = new google.maps.LatLng(-34.397, 150.644);
+var mapOptions = {
+zoom: 8,
+center: latlng
+}
+map = new google.maps.Map(document.getElementById('map'), mapOptions);
+}
+
+function codeAddress() {
+var address = document.getElementById('address').value;
+geocoder.geocode( { 'address': address}, function(results, status) {
+if (status == 'OK') {
+map.setCenter(results[0].geometry.location);
+var marker = new google.maps.Marker({
+map: map,
+position: results[0].geometry.location
+});
+} else {
+alert('Geocode was not successful for the following reason: ' + status);
+}
+});
+}
+
+      </script>          
+  </head>
+            <body onload="initialize()">
                     <nav>
                             <div class="nav-wrapper">
                               <a href="#" class="brand-logo">Estatics</a>
@@ -19,15 +48,17 @@
                               </ul>
                             </div>
                         </nav>
+                       
 <div style="margin:500px ; margin-top:50px; margin-bottom:100px"> <h2 class="center-align">create new property</h2>
 <form action="/property" method="post">
 <input type="text" name="name" placeholder="name">
 <input type="text" name="cost" placeholder="cost">
-<input type="text" name="place" placeholder="place">
+<input type="text" id="address" name="place" placeholder="place">
 <input type="text" name="description" placeholder="description">
 <input type="file" name="pic" accept="image/*">
 <input type="submit">
 </form>
+<div id="map" style="width:200px;height:150px"></div>
 </div>
 </body>
 </html>
