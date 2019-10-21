@@ -1,5 +1,8 @@
 <html>
     <head>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
         <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -21,6 +24,9 @@
     } 
 } 
             </script>
+            <script>
+                AOS.init();
+              </script>
             <style>
         .grid { 
           display: grid;
@@ -45,14 +51,23 @@
           padding: 10px;
           width: 100%;
           }
+          .landing {
+            background-image: url(images/humberto-chavez-InrNz281-S8-unsplash.jpg);
+            height:100%;
+            background-size:cover;
+            
+          }
         </style>    
 </head>
 <body>
-        <nav>
+  <div class="landing">  
+      <div class="navbar-fixed">      
+    <nav style="background-color:transparent">
                 <div class="nav-wrapper">
                   <a href="#" class="brand-logo">Estatics</a>
                   <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="/sell">Sell</a></li>
+                    <li><a href="/files">LBRY</a></li>
                     <li><a href="/showrent">My Rent</a></li>
                     <li><a href="/myproperties">My Properties</a></li>
                     <li><a href="/transaction">Transaction</a></li>
@@ -60,11 +75,13 @@
                   </ul>
                 </div>
               </nav>
+            </div>
 
-    <div class="center-align" style="margin-left: 250px; margin-right: 250px"><h1>Welcome <%=name%></h1>
-      <input id="searchbar" onkeyup="search_properties()" type="text"
-      name="search" placeholder="Search Property.."> 
+    <div class="center-align" style="margin-left: 250px; margin-right: 250px;color: white;margin-top:200px" ><h1>Welcome <%=name%></h1>
+       
        </div>
+      </div>
+
     <!-- <tr>
     <% results["rows"].forEach(function(property){ %>
     <td>
@@ -79,6 +96,10 @@
     </td>
       <% }) %>
     </tr> -->
+    <div style="margin-left:250px; margin-right: 250px"> 
+    <input id="searchbar" onkeyup="search_properties()" type="text"
+      name="search" placeholder="Search Property..">
+    </div>
     <div style="margin:100px">
     <main class="grid">
             <% results["rows"].forEach(function(property){ %>
@@ -93,5 +114,7 @@
                   
                   <% }) %>
     </main>
+   
+    </div>
 </body>
 </html>

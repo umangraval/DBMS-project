@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt-nodejs');
+const axios = require('axios');
 var crypto = require('crypto');
 var hash = require('object-hash');
 const Pool = require('pg').Pool
@@ -202,6 +203,27 @@ const handleregister = (req,res) => {
         })
     }
 
+    const speech = (req,res) => {
+        const fname= req.body.name;
+        const ffile=req.body.file;
+        axios.post('https://spee.ch/api/claim/publish', {
+            name:fname,
+            file:ffile
+        })
+        .then((res)=>{
+            res.redirect("/property");
+        })
+        .catch((err)=>{
+            //console.log(err);
+            res.send(err);
+        })
+    }
+
+    const inputfiles=(req,res,err)=> {
+        //console.log(err);
+        res.render("files");
+    }
+
     module.exports = {
     getproperty,
     getpropertyById,
@@ -218,5 +240,7 @@ const handleregister = (req,res) => {
     buy,
     myproperties,
     showrent,
-    pdelete
+    pdelete,
+    speech,
+    inputfiles
   }

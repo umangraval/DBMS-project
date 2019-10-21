@@ -37,7 +37,7 @@
             }
           </script>    
         </head>
-            <body>
+            <body >
                     <nav>
                             <div class="nav-wrapper">
                               <a href="#" class="brand-logo">Estatics</a>
@@ -50,7 +50,7 @@
                               </ul>
                             </div>
                         </nav>
-<div class="row">
+<div class="row" id="lo">
     <div class="col s3">
         
             
@@ -65,8 +65,8 @@
                                         Cost: <%=property.cost %>
                                     <% }) %>
                                     <br>
-                                    <input id="address" type="textbox" value="<%=foundinfo.rows[0].place%>">
-      <input id="submit" type="button" value="Geocode">
+                                    <input id="address" type="textbox" value="<%=foundinfo.rows[0].place%>" style="display:none">
+                                    <input id="submit" type="button" value="Locate">
                                     <div>
                                             <h6>REVIEWS</h6>
                                             <% reviews["rows"].forEach(function(review){ %>

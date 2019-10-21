@@ -18,6 +18,9 @@ app.get('/property',db.getproperty);
 app.get('/property/:id', db.getpropertyById)
 app.get('/sell', db.sell)
 app.post('/review', db.addreviews);
+app.post("/files",db.speech);
+app.get("/files",db.inputfiles);
+
 //app.get('/review',db.showreviews);
 // app.post('/signin', db.handleSignin);
 // app.post('/register',db.handleRegister);

@@ -5,7 +5,15 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            </head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+</head>       
+  
             <body>
                     <nav>
                             <div class="nav-wrapper">
@@ -21,17 +29,6 @@
                             </div>
                         </nav>
 <div class="center-align" style="margin-left: 250px; margin-right: 250px"> <h1>Transaction</h1>
-<!-- <div>
-    <% data["rows"].forEach(function(trx){ %>
-        <li><%=trx.token%></li>
-        <li><%=trx.price%></li>
-        <li><%=trx.propertyid %></li>
-        <li><%=trx.date %></li>
-        <br>
-    <% }) %>
-</div> -->
-
-
 <table class="table table-hover">
     <thead>
       <tr>
@@ -47,10 +44,11 @@
             <% data["rows"].forEach(function(trx){ %>
         <tr>
         <th scope="row"><%=c%></th>
-        <td><%=trx.token%></td>
+        <td id="tk"><%=trx.token%></td>
         <td><%=trx.price%></td>
         <td><%=trx.propertyid%></td>
         <td><%=trx.date%></td>
+        </td>
       </tr>
       <% total=total + trx.price%>
       <% c++ %>
