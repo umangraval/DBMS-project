@@ -62,7 +62,7 @@
                     </div>
                     <div class="card-content">
                                        Address: <%=property.place %><br>
-                                        Cost: <%=property.cost %>
+                                        Cost: <%=property.cost %> (per square feet)
                                     <% }) %>
                                     <br>
                                     <input id="address" type="textbox" value="<%=foundinfo.rows[0].place%>" style="display:none">
@@ -84,6 +84,7 @@
                     </div>
                     <div class="card-action">
                             <form method="post" action="/buy">
+                              <input type="text" placeholder="Enter sq feet" name="sqfeet">
                                 <input type="submit" value="buy">
                             </form>
                             <button type="button"><a href="/rent">rent</a></button>

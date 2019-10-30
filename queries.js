@@ -173,11 +173,13 @@ const handleregister = (req,res) => {
 
     const buy = (req, res) => {
         var date = new Date();
-        var key = {pid:propertyid, cid:customerid} ;
+        var key = {pid:propertyid, cid:customerid};
+        const sqfeet = parseInt(req.body.sqfeet);
+        var tpropertycost = propertycost * sqfeet;
         //token = crypto.createHmac('sha1', toString(key)).update(toString(text)).digest('hex');        
         token = hash(key);
         console.log(token);
-        pool.query('INSERT INTO transaction (token,propertyid,price,date,userid) VALUES ($1,$2,$3,$4,$5)',[token,propertyid,propertycost,date,customerid],(err,info)=>{
+        pool.query('INSERT INTO transaction (token,propertyid,price,date,userid,sqfeet) VALUES ($1,$2,$3,$4,$5,$6)',[token,propertyid,tpropertycost,date,customerid,sqfeet],(err,info)=>{
             if(err) throw err;
            res.redirect("/transaction");
         })
@@ -203,26 +205,7 @@ const handleregister = (req,res) => {
         })
     }
 
-    const speech = (req,res) => {
-        const fname= req.body.name;
-        const ffile=req.body.file;
-        axios.post('https://spee.ch/api/claim/publish', {
-            name:fname,
-            file:ffile
-        })
-        .then((res)=>{
-            res.redirect("/property");
-        })
-        .catch((err)=>{
-            //console.log(err);
-            res.send(err);
-        })
-    }
-
-    const inputfiles=(req,res,err)=> {
-        //console.log(err);
-        res.render("files");
-    }
+    
 
     module.exports = {
     getproperty,
@@ -240,7 +223,5 @@ const handleregister = (req,res) => {
     buy,
     myproperties,
     showrent,
-    pdelete,
-    speech,
-    inputfiles
+    pdelete
   }
