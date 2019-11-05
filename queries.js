@@ -3,13 +3,23 @@ const axios = require('axios');
 var crypto = require('crypto');
 var hash = require('object-hash');
 const Pool = require('pg').Pool
+
+const {
+POSTGRES_USER,
+POSTGRES_HOST,
+POSTGRES_DB,
+POSTGRES_PASSWORD,
+POSTGRES_PORT
+} = process.env;
+
 const pool = new Pool({
-  user: 'umang13',
-  host: 'localhost',
-  database: 'e_estate',
-  password: '',
-  port: 5432,
+  user: POSTGRES_USER,
+  host: POSTGRES_HOST,
+  database: POSTGRES_DB,
+  password: POSTGRES_PASSWORD,
+  port: POSTGRES_PORT
 })
+
 var name;
 var customerid;
 var propertyid;

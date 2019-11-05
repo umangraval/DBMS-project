@@ -1,6 +1,6 @@
 const express = require('express')
-// const PORT = 3001;
 const app =express()
+const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt-nodejs');
 const db = require('./queries')
@@ -38,6 +38,6 @@ app.get('*',function (req, res) {
 });
 
 app.post("/delete/:id",db.pdelete);
-app.listen(3005,function(){
-    console.log("server on port 3005");
+app.listen(port,function(){
+    console.log(`sever on port ${port}`);
 });
