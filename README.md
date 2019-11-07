@@ -1,5 +1,8 @@
 # DBMS-project
  To run the site in localhost
-**npm install
-npm start**
+```
+npm install
+npm start
+```
 
+Add google geocode api key in 
